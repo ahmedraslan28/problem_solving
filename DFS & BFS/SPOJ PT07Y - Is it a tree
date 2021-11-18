@@ -1,0 +1,51 @@
+using namespace std;
+#include<bits/stdc++.h>
+#define ll long long
+#define ull unsigned long long
+#define Case int t ; cin>>t ; while(t--)
+#define all(v) ((v).begin()),((v).end())
+#define sz(n) (int)n.size()
+#define fx(x) fixed<<setprecision(x)
+#define prl pair<ll , ll>
+#define pri pair<int , int>
+#define pb push_back
+#define f first
+#define s second
+ll mod = 1e9 + 7 ;
+int dx[] = {0,0,1,1,1,-1,-1,-1};
+int dy[] = {-1,1,-1,0,1,-1,0,1};
+const int N = 1e6+5 ;
+int n , m ;
+vector<int> adj[N] ;
+vector<int> vis(N ) ;
+bool c = false ;
+void dfs(int p){
+    vis[p] = 1;
+    for(auto ch : adj[p]){
+        if(vis[ch] == 1) {c = true ; return ;}
+        else if (vis[ch] == 0) dfs(ch) ;
+    }
+    vis[p] = 2 ;
+}
+void solve() {
+    cin>>n>>m;
+    int x=m;
+    while(x--){
+        int u , v ; cin>>u>>v;
+        u--,v--;
+        adj[u].push_back(v);
+    }
+    if(m!=(n-1)){cout << "NO\n" ; return ;}
+    for(int i = 0 ; i<n ; i++){
+        if(!vis[i]){
+            dfs(i) ;
+            if(c) {cout << "NO\n" ; return ;}
+        }
+    }
+    cout << "YES\n" ;
+}
+int main(){
+    fast() ;
+    file();
+    solve();
+}
