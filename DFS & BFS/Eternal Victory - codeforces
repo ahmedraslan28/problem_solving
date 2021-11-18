@@ -1,0 +1,57 @@
+using namespace std;
+#include<bits/stdc++.h>
+#define ll long long
+#define ull unsigned long long
+#define Case int t ; cin>>t ; while(t--)
+#define all(v) ((v).begin()),((v).end())
+#define sz(n) (int)n.size()
+#define fx(x) fixed<<setprecision(x)
+#define prl pair<ll , ll>
+#define pri pair<int , int>
+#define pb push_back
+#define f first
+#define s second
+ll mod = 1e9 + 7 ;
+int dx[] = {0,0,1,1,1,-1,-1,-1};
+int dy[] = {-1,1,-1,0,1,-1,0,1};
+void file(){
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+void fast (){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+}
+const int N = 1e6+5 ;
+int n , m ;
+vector<pair<int,ll>> adj[N] ;
+vector<int> vis(N) ;
+ll dist[N]  ;
+ll ma = -1 ;
+void dfs(int p , ll d){
+    vis[p] = 1 ;
+    dist[p] = d ;
+    for(auto ch : adj[p]){
+        if(!vis[ch.first]) dfs(ch.first , d+ch.second) ;
+    }
+    ma = max(ma , dist[p]) ;
+}
+void solve() {
+    cin >> n ;
+    ll sum = 0 ;
+    for(int i = 1 ; i<n ; i++){
+        int u , v , w ; cin>>u>>v>>w;
+        sum+=(ll)w;
+        adj[u].push_back({v , w});
+        adj[v].push_back({u , w});
+    }
+    dfs(1 , 0) ;
+    cout << ((sum - ma)*2) + ma << "\n" ;
+}
+int main(){
+    fast() ;
+    file();
+    solve();
+}
